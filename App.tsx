@@ -6,6 +6,8 @@ import { ClipboardIcon } from './components/icons/ClipboardIcon';
 import { CheckIcon } from './components/icons/CheckIcon';
 import { UploadIcon } from './components/icons/UploadIcon';
 import { DownloadIcon } from './components/icons/DownloadIcon';
+import { InformationCircleIcon } from './components/icons/InformationCircleIcon';
+import { XIcon } from './components/icons/XIcon';
 
 // Add type declaration for the XLSX library loaded from CDN
 declare const XLSX: any;
@@ -51,6 +53,7 @@ const App: React.FC = () => {
     const [draggedListId, setDraggedListId] = useState<number | null>(null);
     const [separator, setSeparator] = useState<string>('_');
     const fileInputRef = useRef<HTMLInputElement>(null);
+    const [isInfoModalOpen, setIsInfoModalOpen] = useState(false);
 
     const combinedCode = useMemo(() => 
         lists
@@ -235,6 +238,14 @@ const App: React.FC = () => {
                             <DownloadIcon className="h-5 w-5" />
                             <span>Eksportuj</span>
                         </button>
+                        <button
+                            onClick={() => setIsInfoModalOpen(true)}
+                            className="bg-white text-gray-700 py-2 px-4 rounded-lg flex items-center gap-2 shadow-md hover:bg-gray-100 transition-colors"
+                            aria-label="Informacje o stronie"
+                        >
+                            <InformationCircleIcon className="h-5 w-5" />
+                            <span>Info</span>
+                        </button>
                     </div>
                 </header>
 
@@ -329,11 +340,63 @@ const App: React.FC = () => {
                             className="font-semibold text-gray-600 hover:text-blue-600 hover:underline transition-colors"
                         >
                             BIM PARTNER
-                        </a>
+                        </a>. Wszelkie prawa zastrzeżone.
                     </p>
-                    <p className="mt-2">Wszelkie prawa zastrzeżone.</p>
                 </footer>
             </div>
+
+            {isInfoModalOpen && (
+                <div 
+                    className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
+                    onClick={() => setIsInfoModalOpen(false)}
+                    role="dialog"
+                    aria-modal="true"
+                    aria-labelledby="info-modal-title"
+                >
+                    <div 
+                        className="bg-white rounded-2xl shadow-2xl p-8 max-w-2xl w-full relative transform transition-all"
+                        onClick={(e) => e.stopPropagation()}
+                    >
+                        <button 
+                            onClick={() => setIsInfoModalOpen(false)}
+                            className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 transition-colors"
+                            aria-label="Zamknij okno informacyjne"
+                        >
+                            <XIcon className="h-6 w-6" />
+                        </button>
+                        <h2 id="info-modal-title" className="text-2xl font-bold text-gray-800 mb-4">O Aplikacji "Menadżer Kodyfikacji"</h2>
+                        <div className="text-gray-600 space-y-4">
+                            <p>
+                                Ta aplikacja została zaprojektowana z myślą o uproszczeniu kodyfikacji nazw plików, stanowiąc kluczowe narzędzie w zarządzaniu dużymi zbiorami danych i dokumentów.
+                            </p>
+                            <h3 className="text-lg font-semibold text-gray-700 pt-2">Kluczowe funkcje:</h3>
+                            <ul className="list-disc list-inside space-y-2 pl-4">
+                                <li><strong>Dynamiczne Listy:</strong> Twórz i usuwaj dowolną liczbę list rozwijanych.</li>
+                                <li><strong>Zarządzanie Pozycjami:</strong> Dodawaj, edytuj i usuwaj pozycje w każdej liście, wraz z opcjonalnymi opisami.</li>
+                                <li><strong>Zmiana Kolejności:</strong> Użyj metody "przeciągnij i upuść" (drag-and-drop), aby łatwo zmieniać kolejność list.</li>
+                                <li><strong>Generowanie Kodu:</strong> Automatycznie generuj wspólny kod z aktualnie wybranych pozycji na wszystkich listach, z możliwością wyboru separatora.</li>
+                                <li><strong>Sortowanie i Filtrowanie:</strong> Sortuj pozycje w listach alfabetycznie i przełączaj widok między nazwą a opisem.</li>
+                                <li><strong>Import/Eksport Excel:</strong> Wygodnie eksportuj wszystkie swoje listy do jednego pliku .xlsx lub importuj je z powrotem, aby kontynuować pracę.</li>
+                            </ul>
+                            <h3 className="text-lg font-semibold text-gray-700 pt-2">Prywatność Danych:</h3>
+                            <p>
+                                Twoja prywatność jest dla nas ważna. Wszystkie dane, które wprowadzasz i importujesz, są przetwarzane <strong>wyłącznie lokalnie w Twojej przeglądarce</strong>. Żadne informacje nie są wysyłane ani przechowywane na zewnętrznych serwerach. Twoje listy należą tylko do Ciebie.
+                            </p>
+                             <p className="pt-4">
+                                Stworzone przez{' '}
+                                <a 
+                                    href="https://www.linkedin.com/company/bim-partner/" 
+                                    target="_blank" 
+                                    rel="noopener noreferrer"
+                                    className="font-semibold text-blue-600 hover:underline"
+                                >
+                                    BIM PARTNER
+                                </a>.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
