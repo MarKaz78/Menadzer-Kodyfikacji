@@ -1,0 +1,5 @@
+{
+  "name": "Dynamic Dropdown List Manager",
+  "description": "A sleek and interactive web application that allows users to dynamically add and remove items from a dropdown list. Built with React, TypeScript, and styled with Tailwind CSS for a modern user experience.",
+  "requestFramePermissions": []
+}
