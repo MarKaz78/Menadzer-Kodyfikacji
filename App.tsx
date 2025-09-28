@@ -1,3 +1,4 @@
+
 import React, { useState, useMemo, useRef } from 'react';
 import { DropdownList } from './components/DropdownList';
 import { PlusIcon } from './components/icons/PlusIcon';
@@ -330,6 +331,7 @@ const App: React.FC = () => {
                             BIM PARTNER
                         </a>
                     </p>
+                    <p className="mt-2">Wszelkie prawa zastrzeżone.</p>
                 </footer>
             </div>
         </div>
